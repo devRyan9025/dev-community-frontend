@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../api/axiosConfig'; // 전역 설정된 axios 사용
 import Logout from '../components/Logout';
 
-function HomePage() {
+function Home() {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
     axios
-      .get('/api/', { withCredentials: true }) // ✅ 프록시 경로로 요청
+      .get('/user/me') // ✅ JWT 방식에 맞게 보호된 라우트 호출
       .then((res) => {
-        setMessage(res.data.message);
-        setUser(res.data.user);
+        setMessage('환영합니다!');
+        setUser(res.data.data); // { id, name, email }
       })
       .catch((err) => {
         setMessage(err.response?.data?.message || '오류 발생');
@@ -29,10 +29,9 @@ function HomePage() {
           <p>이메일: {user.email}</p>
         </div>
       )}
-
       <Logout />
     </div>
   );
 }
 
-export default HomePage;
+export default Home;

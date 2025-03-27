@@ -17,14 +17,16 @@ function Login() {
     data.append('password', password);
 
     try {
-      const res = await axios.post('/api/auth/login', data, {
-        withCredentials: true,
-      });
-
+      const res = await axios.post('/api/auth/login', data);
       alert(res.data.message || '✅ 로그인 성공!');
+
+      localStorage.setItem('token', res.data.token); // ✅ 토큰 저장
+
+      // 사용자 정보 가져오기 (또는 JWT 디코딩해서 setUser 처리 가능)
       setIsLoggedIn(true);
-      setUser(res.data.user || null);
-      navigate('/home'); // 로그인 후 홈으로 이동
+      setUser(null); // 사용자 정보가 필요하다면 /api/user/me 요청 구현 필요
+
+      navigate('/home');
     } catch (err) {
       alert(err.response?.data?.message || '로그인 실패');
     }
