@@ -1,0 +1,36 @@
+.Header {
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: var(--font-weight-black);
+  height: var(--header-height);
+}
+
+.nav__left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.site__name {
+  font-size: var(--font-size-3);
+}
+
+.nav__right {
+  display: flex;
+}
+
+.nav__item {
+  margin-left: var(--spacing-3);
+  position: relative;
+}

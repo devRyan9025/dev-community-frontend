@@ -1,7 +1,9 @@
 import { useState, useContext } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import axios from '../../api/axiosConfig';
+import AuthContext from '../../context/AuthContext';
+
+import styles from './Login.module.css';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -17,7 +19,7 @@ function Login() {
     data.append('password', password);
 
     try {
-      const res = await axios.post('/api/auth/login', data);
+      const res = await axios.post('/auth/login', data);
       alert(res.data.message || '✅ 로그인 성공!');
 
       localStorage.setItem('token', res.data.token); // ✅ 토큰 저장
@@ -33,24 +35,33 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleLogin}>
-      <h2>로그인</h2>
-      <input
-        type='email'
-        placeholder='이메일'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type='password'
-        placeholder='비밀번호'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      <button type='submit'>로그인</button>
-    </form>
+    <>
+      <div className={styles.Login}>
+        <form onSubmit={handleLogin}>
+          <div className={styles.input_container}>
+            <input
+              className={styles.input}
+              type='email'
+              placeholder='이메일'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              className={styles.input}
+              type='password'
+              placeholder='비밀번호'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className={styles.button}>
+            <button type='submit'>로그인</button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
 
