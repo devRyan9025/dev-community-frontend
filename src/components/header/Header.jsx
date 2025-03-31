@@ -14,8 +14,12 @@ export default function Header() {
       await axios.post('/auth/logout', null, {
         withCredentials: true,
       });
+
+      localStorage.removeItem('token');
+
       setIsLoggedIn(false);
       setUser(null);
+
       alert('로그아웃 되었습니다.');
       navigate('/login');
     } catch (err) {
@@ -39,7 +43,7 @@ export default function Header() {
                 홈
               </Link>
 
-              {!isLoggedIn && user ? (
+              {!isLoggedIn ? (
                 <>
                   <Link className={styles.nav__item} to='/login'>
                     로그인
