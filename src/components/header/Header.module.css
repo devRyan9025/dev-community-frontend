@@ -1,11 +1,16 @@
 .Header {
   background-color: var(--dark-color);
   color: var(--white-color);
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 100;
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-1);
 }
 
 .header__nav {
@@ -33,4 +38,5 @@
 .nav__item {
   margin-left: var(--spacing-3);
   position: relative;
+  cursor: pointer;
 }

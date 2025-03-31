@@ -1,8 +1,15 @@
 .Login {
   background-color: aquamarine;
+  margin-top: var(--spacing-5);
 }
 
-.input_container {
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-1);
+}
+
+.input_bundle {
   display: flex;
   flex-direction: column;
   align-items: center;

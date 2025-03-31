@@ -17,7 +17,7 @@ function Register() {
     data.append('password', password);
 
     try {
-      const res = await axios.post('/api/auth/register', data, {
+      const res = await axios.post('/auth/register', data, {
         withCredentials: true,
       });
 

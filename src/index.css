@@ -48,7 +48,7 @@
     --box-shadow-2: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   }
 
-  body {
+  .container {
     max-width: 1024px;
     margin: 0 auto;
     padding: 0 var(--spacing-1);
