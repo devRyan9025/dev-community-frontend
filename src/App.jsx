@@ -1,5 +1,4 @@
 import { Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthProvider';
 import ProtectedRoute from './components/ProtectedRoute';
 
 import Login from './pages/auth_page/Login';
@@ -13,16 +12,15 @@ import './App.css';
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Header />
+      <Header />
 
-        <Routes>
-          {/* 누구나 접근 가능 */}
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+      <Routes>
+        {/* 누구나 접근 가능 */}
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
 
-          {/* 보호된 페이지
+        {/* 보호된 페이지
           <Route
             path='/home'
             element={
@@ -31,10 +29,9 @@ function App() {
               </ProtectedRoute>
             }
           />*/}
-        </Routes>
+      </Routes>
 
-        <Footer />
-      </AuthProvider>
+      <Footer />
     </>
   );
 }
