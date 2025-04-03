@@ -6,21 +6,26 @@ import AddressInput from '../../components/common/AddressInput';
 import formatPhoneNumber from '../../util/formatPhoneNumber';
 
 export default function Register() {
-  const [name, setName] = useState('');
+  // 이메일 관련 state
   const [email, setEmail] = useState('');
+  const [emailId, setEmailId] = useState('');
+  const [emailDomain, setEmailDomain] = useState('custom');
+  const [customDomain, setCustomDomain] = useState('');
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+
+  // 비밀번호 관련 state
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
+
+  // 회원 가입 양식
+  const [name, setName] = useState('');
   const [company, setCompany] = useState('');
   const [position, setPosition] = useState('');
   const [phone, setPhone] = useState('');
   const [postcode, setPostcode] = useState('');
   const [address, setAddress] = useState('');
   const [detailAddress, setDetailAddress] = useState('');
-
-  // 이메일 관련 state
-  const [emailId, setEmailId] = useState('');
-  const [emailDomain, setEmailDomain] = useState('custom');
-  const [customDomain, setCustomDomain] = useState('');
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const nav = useNavigate();
 
@@ -54,6 +59,11 @@ export default function Register() {
     window.addEventListener('storage', handleStorage);
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
+
+  // 비밀번호 일치 여부 확인
+  useEffect(() => {
+    setPasswordMatch(password === passwordConfirm);
+  }, [password, passwordConfirm]);
 
   // 이메일 인증 요청
   const handleEmailVerification = async () => {
@@ -92,6 +102,11 @@ export default function Register() {
       return;
     }
 
+    if (!passwordMatch) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
     const data = new FormData();
     data.append('name', name);
     data.append('email', email);
@@ -120,6 +135,7 @@ export default function Register() {
   // 회원가입 요청
   const handleRegister = async (e) => {
     e.preventDefault(); // 새로고침 방지
+
     submitForm();
   };
 
@@ -133,7 +149,7 @@ export default function Register() {
       <form className='mt-6 space-y-6'>
         <div className='grid grid-cols-1  gap-6'>
           {/* 이메일 입력란 */}
-          <div>
+          <section className='email_section'>
             <CustomEmailInput
               isEmailVerified={isEmailVerified}
               emailId={emailId}
@@ -152,97 +168,131 @@ export default function Register() {
               className={`mt-4 px-4 py-2 text-sm rounded-md ${
                 isEmailVerified
                   ? 'bg-gray-300 cursor-not-allowed'
-                  : 'bg-indigo-500 text-white'
+                  : 'bg-gray-900 text-white'
               }`}>
               {isEmailVerified ? '인증완료' : '인증하기'}
             </button>
-          </div>
 
-          {/* 이름 */}
-          <div>
-            <label
-              htmlFor='name'
-              className='block text-sm font-medium text-gray-700'>
-              이름
-            </label>
-            <input
-              type='text'
-              name='name'
-              id='name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+            {/* 이메일 결과 미리보기 */}
+            <div className='text-sm text-gray-500 mt-3'>
+              입력한 이메일 :{' '}
+              <strong>
+                {emailId}@
+                {emailDomain === 'custom' ? customDomain : emailDomain}
+              </strong>
+            </div>
+          </section>
+          <section className='grid grid-cols-2 gap-6 info_section'>
+            {/* 비밀번호 */}
+            <div>
+              <label
+                htmlFor='password'
+                className='block text-sm font-medium text-gray-700'>
+                비밀번호
+              </label>
+              <input
+                type='password'
+                name='password'
+                id='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+              />
+            </div>
+
+            {/* 비밀번호 확인*/}
+            <div>
+              <label
+                htmlFor='passwordConfirm'
+                className='block text-sm font-medium text-gray-700'>
+                비밀번호 확인
+              </label>
+              <input
+                type='password'
+                name='passwordConfirm'
+                id='passwordConfirm'
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+                required
+                className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+              />
+              {!passwordMatch && (
+                <p className='mt-1 text-sm text-red-500'>
+                  비밀번호가 일치하지 않습니다.
+                </p>
+              )}
+            </div>
+
+            {/* 이름 */}
+            <div>
+              <label
+                htmlFor='name'
+                className='block text-sm font-medium text-gray-700'>
+                이름
+              </label>
+              <input
+                type='text'
+                name='name'
+                id='name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+              />
+            </div>
+
+            {/* 회사명 */}
+            <div>
+              <label className='block text-sm font-medium text-gray-700'>
+                회사명
+              </label>
+              <input
+                type='text'
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+              />
+            </div>
+
+            {/* 직급 */}
+            <div>
+              <label className='block text-sm font-medium text-gray-700'>
+                직급
+              </label>
+              <input
+                type='text'
+                value={position}
+                onChange={(e) => setPosition(e.target.value)}
+                className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+              />
+            </div>
+
+            {/* 전화번호 */}
+            <div>
+              <label className='block text-sm font-medium text-gray-700'>
+                전화번호
+              </label>
+              <input
+                type='tel'
+                value={phone}
+                onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
+                placeholder='010-1234-5678'
+                className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
+              />
+            </div>
+          </section>
+          <section className='address_section'>
+            {/* 회사 주소 */}
+            <AddressInput
+              address={address}
+              setAddress={setAddress}
+              detailAddress={detailAddress}
+              setDetailAddress={setDetailAddress}
+              postcode={postcode}
+              setPostcode={setPostcode}
             />
-          </div>
-
-          {/* 비밀번호 */}
-          <div>
-            <label
-              htmlFor='password'
-              className='block text-sm font-medium text-gray-700'>
-              비밀번호
-            </label>
-            <input
-              type='password'
-              name='password'
-              id='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
-            />
-          </div>
-
-          {/* 회사명 */}
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>
-              회사명
-            </label>
-            <input
-              type='text'
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
-            />
-          </div>
-
-          {/* 직급 */}
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>
-              직급
-            </label>
-            <input
-              type='text'
-              value={position}
-              onChange={(e) => setPosition(e.target.value)}
-              className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
-            />
-          </div>
-
-          {/* 전화번호 */}
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>
-              전화번호
-            </label>
-            <input
-              type='tel'
-              value={phone}
-              onChange={(e) => setPhone(formatPhoneNumber(e.target.value))}
-              placeholder='010-1234-5678'
-              className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
-            />
-          </div>
-
-          {/* 회사 주소 */}
-          <AddressInput
-            address={address}
-            setAddress={setAddress}
-            detailAddress={detailAddress}
-            setDetailAddress={setDetailAddress}
-            postcode={postcode}
-            setPostcode={setPostcode}
-          />
+          </section>
         </div>
 
         {/* 가입 버튼 */}
