@@ -7,17 +7,23 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token =
+      localStorage.getItem('token') || sessionStorage.getItem('token');
+
     if (!token) return;
 
     axios
-      .get('/user/me') // ✅ /api는 baseURL에 이미 포함되어 있음
+      .get('/user/me', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
         setIsLoggedIn(true);
-        setUser(res.data.data);
+        setUser(res.data.user);
       })
       .catch(() => {
+        // 만료되거나 잘못된 토큰인 경우
         localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         setIsLoggedIn(false);
         setUser(null);
       });

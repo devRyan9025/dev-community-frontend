@@ -8,6 +8,7 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 
 import './App.css';
+import VerifyEmail from './pages/auth_page/VerifyEmail';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/verify-email' element={<VerifyEmail />} />
 
         {/* 보호된 페이지
           <Route
