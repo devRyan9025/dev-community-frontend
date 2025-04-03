@@ -30,18 +30,10 @@ function Home() {
   return (
     <div className={styles.Home}>
       <img
-        src='/images/webros.jpg'
+        src='/images/main.png'
         alt='메인 이미지'
         className={styles.mainImage}
       />
-      <h1>개발자 커뮤니티에 오신걸 환영합니다 🙌</h1>
-
-      {user && (
-        <div className={styles.userInfo}>
-          <p>{user.name}</p>
-          <p>{user.email}</p>
-        </div>
-      )}
     </div>
   );
 }
