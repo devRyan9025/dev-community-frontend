@@ -4,7 +4,7 @@ function Logout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('token') || sessionStorage.removeItem('token');
     alert('로그아웃 성공!');
     navigate('/login');
   };

@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
-import axios from '../../api/axiosConfig';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -11,11 +10,7 @@ export default function Header() {
   // 로그아웃
   const handleLogout = async () => {
     try {
-      await axios.post('/auth/logout', null, {
-        withCredentials: true,
-      });
-
-      localStorage.removeItem('token');
+      localStorage.removeItem('token') || sessionStorage.removeItem('token');
 
       setIsLoggedIn(false);
       setUser(null);
@@ -54,7 +49,7 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <Link className={styles.nav__item} to='/'>
+                  <Link className={styles.nav__item} to='/mypage'>
                     {' '}
                     {user?.name}님 어서오세요!
                   </Link>
