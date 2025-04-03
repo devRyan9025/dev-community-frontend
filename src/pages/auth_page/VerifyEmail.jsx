@@ -19,7 +19,9 @@ export default function VerifyEmail() {
 
       // ✅ 인증 성공시 로컬스토리지 저장
       localStorage.setItem('verifiedEmail', verifiedEmail);
-      setMessage('✅ 인증이 완료되었습니다!');
+      setMessage(
+        '인증이 완료되었습니다! 기존 페이지로 가서 남은 단계를 진행해주세요!'
+      );
     } catch (err) {
       setMessage(err.response?.data?.message || '❌ 인증에 실패했습니다.');
     }
@@ -31,7 +33,7 @@ export default function VerifyEmail() {
       <button
         onClick={handleVerify}
         className='bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700'>
-        인증 완료 처리
+        인증 완료
       </button>
       {message && <p className='mt-4 text-gray-700'>{message}</p>}
     </div>

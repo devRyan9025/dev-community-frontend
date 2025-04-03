@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../../context/AuthContext';
 
 function ProtectedRoute({ children }) {
   const { isLoggedIn } = useContext(AuthContext);
 
   if (!isLoggedIn) {
-    alert('로그인이 필요합니다.');
+    alert('로그인이 필요한 서비스입니다.');
     return <Navigate to='/login' replace />;
   }
 
