@@ -5,6 +5,8 @@ import axios from '../api/axiosConfig';
 export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [imageVersion, setImageVersion] = useState(Date.now());
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -38,7 +40,15 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, user, setIsLoggedIn, setUser, loading }}>
+      value={{
+        isLoggedIn,
+        user,
+        setIsLoggedIn,
+        setUser,
+        loading,
+        imageVersion,
+        setImageVersion,
+      }}>
       {children}
     </AuthContext.Provider>
   );

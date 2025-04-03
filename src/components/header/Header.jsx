@@ -3,8 +3,11 @@ import { useContext } from 'react';
 import AuthContext from '../../context/AuthContext';
 import styles from './Header.module.css';
 
+const API_BASE = import.meta.env.VITE_API_BASE;
+
 export default function Header() {
-  const { isLoggedIn, user, setIsLoggedIn, setUser } = useContext(AuthContext);
+  const { isLoggedIn, user, setIsLoggedIn, setUser, imageVersion } =
+    useContext(AuthContext);
   const navigate = useNavigate();
 
   // 로그아웃
@@ -34,10 +37,6 @@ export default function Header() {
             </div>
 
             <div className={styles.nav__right} id='nav__menu'>
-              <Link className={styles.nav__item} to='/'>
-                홈
-              </Link>
-
               {!isLoggedIn ? (
                 <>
                   <Link className={styles.nav__item} to='/login'>
@@ -49,9 +48,21 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <Link className={styles.nav__item} to='/mypage'>
-                    {' '}
-                    {user?.name}님 어서오세요!
+                  <Link className={styles.profile__nav} to='/mypage'>
+                    <img
+                      alt='프로필이미지'
+                      src={
+                        user?.profileImage
+                          ? `${API_BASE}/uploads/${user.profileImage}?v=${imageVersion}`
+                          : '/default-profile.png'
+                      }
+                      className={styles.profile__image}
+                    />
+                    <span className={styles.profile__name}>{user?.name}님</span>
+                  </Link>
+
+                  <Link className={styles.nav__item} to='/'>
+                    홈
                   </Link>
                   <button className={styles.nav__item} onClick={handleLogout}>
                     로그아웃
