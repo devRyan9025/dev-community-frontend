@@ -41,7 +41,7 @@ export default function AddressInput({
         value={postcode}
         readOnly
         placeholder='우편번호'
-        className='border px-3 py-2 rounded w-1xs'
+        className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
       />
 
       {/* 주소 */}
@@ -51,12 +51,12 @@ export default function AddressInput({
           readOnly
           value={address}
           placeholder='주소 검색을 해주세요'
-          className='border px-3 py-2 rounded w-2xs'
+          className='block w-2xl border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
         />
         <button
           type='button'
           onClick={handleSearchAddress}
-          className='bg-indigo-500 text-white px-4 py-2 rounded text-sm'>
+          className='bg-gray-900 text-white px-4 rounded text-sm'>
           주소 찾기
         </button>
       </div>
@@ -67,7 +67,7 @@ export default function AddressInput({
         value={detailAddress}
         onChange={(e) => setDetailAddress(e.target.value)}
         placeholder='상세 주소 입력 (예: 101동 202호)'
-        className='border px-3 py-2 rounded w-2xl'
+        className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
       />
     </div>
   );

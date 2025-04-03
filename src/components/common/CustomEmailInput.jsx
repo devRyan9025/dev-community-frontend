@@ -35,7 +35,7 @@ export default function CustomEmailInput({
           value={emailId}
           onChange={(e) => setEmailId(e.target.value)}
           disabled={isEmailVerified}
-          className='border px-3 py-2 rounded w-2xs'
+          className='block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
         />
         <span>@</span>
 
@@ -62,17 +62,9 @@ export default function CustomEmailInput({
           value={customDomain}
           onChange={(e) => setCustomDomain(e.target.value)}
           disabled={isEmailVerified}
-          className='border px-3 py-2 rounded w-2xs'
+          className='mt-1 block w-2xs border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-indigo-500 focus:border-indigo-500'
         />
       )}
-
-      {/* 이메일 결과 미리보기 */}
-      <div className='text-sm text-gray-500 mt-1'>
-        입력한 이메일 :{' '}
-        <strong>
-          {emailId}@{emailDomain === 'custom' ? customDomain : emailDomain}
-        </strong>
-      </div>
     </div>
   );
 }

@@ -17,15 +17,3 @@
   height: 100%;
   object-fit: cover;
 }
-
-.userInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: absolute;
-  color: black;
-  font-size: 1.5rem;
-  font-weight: var(--font-weight-bold);
-  top: 5%;
-  text-align: center;
-}

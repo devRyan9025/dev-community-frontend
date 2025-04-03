@@ -33,10 +33,28 @@
 
 .nav__right {
   display: flex;
+  align-items: center;
 }
 
 .nav__item {
   margin-left: var(--spacing-3);
   position: relative;
   cursor: pointer;
+}
+
+.profile__nav {
+  display: flex;
+  align-items: center;
+}
+
+.profile__image {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 100%;
+  box-shadow: 0 0 0 2px white;
+}
+
+.profile__name {
+  margin-left: var(--spacing-1);
 }
