@@ -1,16 +1,24 @@
 import { Routes, Route } from 'react-router-dom';
-import ProtectedRoute from './components/ProtectedRoute';
+import { useContext } from 'react';
+import AuthContext from './context/AuthContext';
 
 import Login from './pages/auth_page/Login';
 import Register from './pages/auth_page/Register';
 import Home from './pages/home_page/Home';
+import VerifyEmail from './pages/auth_page/VerifyEmail';
+import MyPage from './pages/mypage/MyPage';
+
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
+import ProtectedRoute from './components/common/ProtectedRoute';
 
 import './App.css';
-import VerifyEmail from './pages/auth_page/VerifyEmail';
 
 function App() {
+  const { isLoggedIn, loading } = useContext(AuthContext);
+
+  // ✅ 로그인 상태 확인 중이면 "로딩 중..." 표시
+  if (loading) return <p className='text-center mt-10'>로딩 중...</p>;
   return (
     <>
       <Header />
@@ -22,15 +30,15 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/verify-email' element={<VerifyEmail />} />
 
-        {/* 보호된 페이지
-          <Route
-            path='/home'
-            element={
-              <ProtectedRoute isLoggedIn={true}>
-                <Home />
-              </ProtectedRoute>
-            }
-          />*/}
+        {/* 보호된 페이지 */}
+        <Route
+          path='/mypage'
+          element={
+            <ProtectedRoute isLoggedIn={true}>
+              <MyPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />
