@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axiosConfig';
 import ProfileImageUploader from './ProfileImageUploader';
 
 export default function MyPage() {
   const [user, setUser] = useState(null);
+  const nav = useNavigate();
 
   useEffect(() => {
     axios
@@ -44,6 +46,15 @@ export default function MyPage() {
         <InfoItem label='📞 전화번호' value={user.phone} />
         <InfoItem label='🏠 주소' value={user.address} />
         <InfoItem label='📦 상세주소' value={user.detailAddress} />
+      </div>
+
+      {/* 회원정보 수정 버튼 */}
+      <div className='text-right'>
+        <button
+          onClick={() => nav('/mypage/verify-password')}
+          className='bg-gray-900 hover:bg-black text-white px-6 py-2 mt-5 rounded-md text-sm font-medium'>
+          회원정보 수정
+        </button>
       </div>
     </div>
   );
