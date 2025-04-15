@@ -37,7 +37,7 @@ export default function EditUserInfo() {
     e.preventDefault();
 
     try {
-      const res = await axios.patch('/user/update', form);
+      const res = await axios.patch('/user/updateUserInfo', form);
 
       if (res.data.result === 'success') {
         alert('회원정보가 수정되었습니다!');

@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
     // 토큰이 있으면 로그인 상태 복구 시도
     axios
-      .get('/user/me')
+      .get('/user/getLogginedUser')
       .then((res) => {
         setIsLoggedIn(true);
         setUser(res.data.user);

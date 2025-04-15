@@ -27,7 +27,7 @@ export default function ProfileImageUploader({
 
     try {
       const res = await axios.get(
-        `/user/check-filename?filename=${encodedName}`
+        `/user/check-duplicate-filename?filename=${encodedName}`
       );
 
       if (res.data.result === 'exist') {

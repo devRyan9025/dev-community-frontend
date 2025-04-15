@@ -36,11 +36,13 @@ function Login() {
       }
 
       // 3. 사용자 정보 요청
-      const userRes = await axios.get('/user/me', {
+      const userRes = await axios.get('/user/getLogginedUser', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log(userRes);
 
       alert(res.data.message);
       setUser(userRes.data.user);

@@ -9,11 +9,12 @@ export default function MyPage() {
 
   useEffect(() => {
     axios
-      .get('/user/me')
+      .get('/user/getLogginedUser')
       .then((res) => setUser(res.data.user))
       .catch((err) => console.error('유저 정보 조회 실패:', err));
   }, []);
 
+  console.log(user);
   if (!user)
     return <p className='text-center mt-12 text-gray-400'>로딩 중...</p>;
 
