@@ -14,7 +14,6 @@ export default function MyPage() {
       .catch((err) => console.error('유저 정보 조회 실패:', err));
   }, []);
 
-  console.log(user);
   if (!user)
     return <p className='text-center mt-12 text-gray-400'>로딩 중...</p>;
 
@@ -25,9 +24,11 @@ export default function MyPage() {
         {/* 프로필 이미지 자리 */}
         <ProfileImageUploader
           userId={user.id}
-          currentImage={user.profileImage}
+          currentImage={
+            user.profile_image || '../../assets/default-profile.png'
+          }
           onUpload={(url) =>
-            setUser((prev) => ({ ...prev, profileImage: url }))
+            setUser((prev) => ({ ...prev, profile_image: url }))
           }
           userName={user.name}
         />
@@ -46,7 +47,7 @@ export default function MyPage() {
         <InfoItem label='💼 직급' value={user.position} />
         <InfoItem label='📞 전화번호' value={user.phone} />
         <InfoItem label='🏠 주소' value={user.address} />
-        <InfoItem label='📦 상세주소' value={user.detailAddress} />
+        <InfoItem label='📦 상세주소' value={user.detail_address} />
       </div>
 
       {/* 회원정보 수정 버튼 */}

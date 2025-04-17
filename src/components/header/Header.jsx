@@ -52,9 +52,9 @@ export default function Header() {
                     <img
                       alt='프로필이미지'
                       src={
-                        user?.profileImage
-                          ? `${API_BASE}/uploads/${user.profileImage}?v=${imageVersion}`
-                          : '/default-profile.png'
+                        user?.profile_image
+                          ? `${API_BASE}/uploads/${user.profile_image}?v=${imageVersion}`
+                          : '/src/assets/default-profile.png'
                       }
                       className={styles.profile__image}
                     />

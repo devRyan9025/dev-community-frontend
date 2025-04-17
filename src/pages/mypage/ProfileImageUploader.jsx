@@ -2,6 +2,9 @@ import { useRef, useState, useContext } from 'react';
 import axios from '../../api/axiosConfig';
 import AuthContext from '../../context/AuthContext';
 import ConfirmModal from '../../components/common/confirmModal';
+import defaultProfile from '../../assets/default-profile.png';
+
+import getFileHash from '../../util/getFileHash';
 
 export default function ProfileImageUploader({
   userId,
@@ -24,18 +27,25 @@ export default function ProfileImageUploader({
 
     // 한글 파일 인코딩
     const encodedName = encodeURIComponent(file.name);
+    const hash = await getFileHash(file); // 해시 계산
 
     try {
       const res = await axios.get(
-        `/user/check-duplicate-filename?filename=${encodedName}`
+        `/user/check-duplicate-filename?filename=${encodedName}&hash=${hash}`
       );
+
+      if (res.data.result === 'same') {
+        alert('동일한 이미지가 이미 업로드되어 있습니다.');
+        return; // 업로드 생략
+      }
 
       if (res.data.result === 'exist') {
         setPendingFile(file); // 중복된 파일 → 모달 띄우기
         setModalOpen(true);
-      } else {
-        uploadFile(file); // 중복 아님 → 바로 업로드
+        return;
       }
+
+      uploadFile(file);
     } catch (err) {
       alert('중복 체크 실패');
       console.error(err);
@@ -48,19 +58,19 @@ export default function ProfileImageUploader({
   // 실제 파일 업로드 실행
   const uploadFile = async (file) => {
     const formData = new FormData();
-    formData.append('profileImage', file);
+    formData.append('profile_image', file);
 
     try {
       const res = await axios.post(`/user/${userId}/upload-profile`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      const filename = res.data.profileImage;
+      const filename = res.data.profile_image;
 
       setPreview(filename);
       setTimestamp(Date.now());
 
-      setUser((prev) => ({ ...prev, profileImage: filename }));
+      setUser((prev) => ({ ...prev, profile_image: filename }));
       setImageVersion(Date.now());
       onUpload(filename); // 부모 컴포넌트 업데이트
     } catch (err) {
@@ -96,7 +106,15 @@ export default function ProfileImageUploader({
         onClick={() => fileInputRef.current?.click()}
         title='프로필 이미지 변경'>
         <img
-          src={`${API_BASE}/uploads/${preview}?t=${timestamp}`}
+          src={
+            preview
+              ? `${API_BASE}/uploads/${preview}?t=${timestamp}`
+              : defaultProfile
+          }
+          onError={(e) => {
+            e.target.onerror = null; // 무한루프 방지
+            e.target.src = defaultProfile;
+          }}
           alt='프로필'
           className='w-full h-full object-cover'
         />

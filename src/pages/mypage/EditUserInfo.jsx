@@ -12,6 +12,7 @@ export default function EditUserInfo() {
     phone: '',
     address: '',
     detailAddress: '',
+    profile_image: '',
   });
   const nav = useNavigate();
 
@@ -23,7 +24,8 @@ export default function EditUserInfo() {
         position: user.position || '',
         phone: user.phone || '',
         address: user.address || '',
-        detailAddress: user.detailAddress || '',
+        detailAddress: user.detail_address || '',
+        profile_image: user.profile_image || '',
       });
     }
   }, [user]);
