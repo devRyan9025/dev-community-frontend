@@ -34,11 +34,6 @@ export default function ProfileImageUploader({
         `/user/check-duplicate-filename?filename=${encodedName}&hash=${hash}`
       );
 
-      if (res.data.result === 'same') {
-        alert('동일한 이미지가 이미 업로드되어 있습니다.');
-        return; // 업로드 생략
-      }
-
       if (res.data.result === 'exist') {
         setPendingFile(file); // 중복된 파일 → 모달 띄우기
         setModalOpen(true);
