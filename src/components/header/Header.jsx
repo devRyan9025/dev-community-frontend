@@ -45,6 +45,9 @@ export default function Header() {
                   <Link className={styles.nav__item} to='/register'>
                     회원가입
                   </Link>
+                  <Link className={styles.nav__item} to='/board'>
+                    게시판
+                  </Link>
                 </>
               ) : (
                 <>
@@ -63,6 +66,9 @@ export default function Header() {
 
                   <Link className={styles.nav__item} to='/'>
                     홈
+                  </Link>
+                  <Link className={styles.nav__item} to='/board'>
+                    게시판
                   </Link>
                   <button className={styles.nav__item} onClick={handleLogout}>
                     로그아웃

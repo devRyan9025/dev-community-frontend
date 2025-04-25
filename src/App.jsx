@@ -12,6 +12,11 @@ import MyPage from './pages/mypage/MyPage';
 import VerifyPassword from './pages/mypage/VerifyPassword';
 import EditUserInfo from './pages/mypage/EditUserInfo';
 
+import BoardList from './pages/board_page/BoardList';
+import BoardRegister from './pages/board_page/BoardRegister';
+import BoardDetail from './pages/board_page/BoardDetail';
+import BoardEdit from './pages/board_page/BoardEdit';
+
 import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -33,8 +38,12 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/verify-email' element={<VerifyEmail />} />
+        <Route path='/board' element={<BoardList />} />
+        <Route path='/board/:id' element={<BoardDetail />} />
 
-        {/* 마이 페이지 관련 - 로그인 해야 접근 가능 */}
+        {/*  ---------- 로그인 해야 접근 가능 ------------ */}
+
+        {/* 마이 페이지 */}
         <Route
           path='/mypage'
           element={
@@ -45,6 +54,24 @@ function App() {
         />
         <Route path='/mypage/verify-password' element={<VerifyPassword />} />
         <Route path='/mypage/edit' element={<EditUserInfo />} />
+
+        {/* 게시글 페이지 */}
+        <Route
+          path='/board/register'
+          element={
+            <ProtectedRoute isLoggedIn={true}>
+              <BoardRegister />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path='/board/:id/edit'
+          element={
+            <ProtectedRoute isLoggedIn={true}>
+              <BoardEdit />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       <Footer />
