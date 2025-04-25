@@ -49,7 +49,7 @@ export default function Register() {
 
     checkVerifiedEmail();
 
-    // 🔥 storage 이벤트로 인증 상태 감지
+    // storage 이벤트로 인증 상태 감지
     const handleStorage = (e) => {
       if (e.key === 'verifiedEmail') {
         checkVerifiedEmail();

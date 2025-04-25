@@ -17,7 +17,7 @@ export default function VerifyEmail() {
       const res = await axios.post('/auth/verify-email', { token });
       const verifiedEmail = res.data.email;
 
-      // ✅ 인증 성공시 로컬스토리지 저장
+      // 인증 성공시 로컬스토리지 저장
       localStorage.setItem('verifiedEmail', verifiedEmail);
       setMessage(
         '인증이 완료되었습니다! 기존 페이지로 가서 남은 단계를 진행해주세요!'
